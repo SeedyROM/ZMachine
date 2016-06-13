@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <unistd.h>
 
-#define DEBUG 0
+#define DEBUG 1
 #define dprintf(...) if(DEBUG) printf(__VA_ARGS__)
 
 #define STACK_SIZE 1024*3 // 3Mb.
@@ -67,17 +67,21 @@ INT program[] = {
                   PUSH, 0x00,
                   PUSH, 0x01,
 
+                  // Set register[0] to 0.
                   MOV, 0x00, 0x00,
-                  HPRNT, 0x00,
+                  HPRNT, 0x00, // This prints HEX to the terminal.
 
+                  // Set register[1] to 32.
                   MOV, 0x01, 0x20,
                   HPRNT, 0x01,
 
-                  ADD, 0x00, 0x01,
-                  CMP,
-                  JLE, 22,
+                  // Jump back to here unless reg[0] > reg[1]!
+                  ADD, 0x00, 0x08,
+                  HPRNT, 0x00,
+                  CMP, // Compare the first 2 registers and set a flag.
+                  JLT, 0x14, // Jumping...
 
-                  // Get them back!
+                  // Get the original register values back!
                   POP, 0x01,
                   POP, 0x00,
                   // Get out of here.
