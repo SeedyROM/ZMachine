@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <unistd.h>
 
-#define DEBUG 1
+#define DEBUG 0
 #define dprintf(...) if(DEBUG) printf(__VA_ARGS__)
 
 #define STACK_SIZE 1024*3 // 3Mb.
@@ -250,5 +250,5 @@ INT program[] = {
     printf("\nValue of register 0 is: 0x%llX\n", registers[0]);
     printf("Value of register 1 is: 0x%llX\n\n", registers[1]);
 
-    return 0;
+    return registers[0];
   }
